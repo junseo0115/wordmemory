@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단어 암기</title>
+    <link rel="stylesheet" href="style.css" (type="text/css")>
+</head>
+<body>
+
+<div class="container">
+    <h1>단어 암기</h1>
+    <input type="text" id="wordInput" placeholder="단어를 입력하세요" onkeyup="checkEnter(event, addWord)" autocomplete="off">
+    <input type="text" id="meaningInput" placeholder="단어의 뜻을 입력하세요" onkeyup="checkEnter(event, addWord)" autocomplete="off">
+    <div class="menu">
+        <button onclick="addWord()">저장</button>
+        <button onclick="deleteWord()">삭제</button>
+        <button onclick="reset()">초기화</button>
+        <button onclick="startTest()">테스트</button>
+    </div>
+    <div class="menu">
+        <button onclick="commu(1)">커뮤1</button>
+        <button onclick="commu(2)">커뮤2</button>
+        <button onclick="commu(3)">커뮤3</button>
+    </div>
+
+    <ul id="wordList"></ul>
+
+    <!-- 테스트를 위한 섹션 -->
+    <div class="test-section" id="testSection">
+        <h2>단어 테스트</h2>
+        <p id="testWord"></p>
+        <input type="text" id="testAnswer" placeholder="뜻을 입력하세요" onkeyup="checkEnter(event, checkAnswer)" autocomplete="off">
+        <div class="menu">
+            <button onclick="checkAnswer()">정답 입력</button>
+            <button onclick="seeAnswer()">뜻 보기</button>
+        </div>
+        
+        <p id="feedback"></p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
