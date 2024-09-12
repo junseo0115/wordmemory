@@ -19,12 +19,10 @@ function commu(n) {
     commuWord[n-1].forEach(item => {
         const word = item[0]
         const meaning = item[1]
-        words.push({word, meaning})
+        words.unshift({word, meaning})
         saveWords(words);
         displayWords();
     });
-
-
 }
 
 function reset() {
@@ -46,7 +44,7 @@ function addWord() {
     
     if (word && meaning) {
         const words = loadWords();
-        words.push({ word, meaning });
+        words.unshift({ word, meaning });
         saveWords(words);
         displayWords();
         wordInput.value = '';
@@ -58,7 +56,7 @@ function addWord() {
 function deleteWord() {
     const words = loadWords();
     if (words) {
-        words.pop();
+        words.shift();
         saveWords(words);
         displayWords();
     }
@@ -143,6 +141,65 @@ function checkEnter(event, func) {
     if (event.key === 'Enter') {
         func();
     }
+}
+
+let testMeanings = []; // 뜻 기반 테스트를 위한 배열
+let currentMeaningIndex = 0;
+
+// 단어 -> 뜻 테스트 시작
+function startWordTest() {
+    const words = loadWords();
+    if (words.length === 0) {
+        alert('저장된 단어가 없습니다.');
+        return;
+    }
+
+    // 뜻을 랜덤하게 섞음
+    testMeanings = words.sort(() => Math.random() - 0.5);
+    currentMeaningIndex = 0;
+
+    document.getElementById('wordTestSection').style.display = 'block'; // 단어 테스트 섹션 표시
+    document.getElementById('testSection').style.display = 'none'; // 뜻 -> 단어 테스트 섹션 숨기기
+    document.getElementById('wordList').style.display = 'none'; // 단어 목록 숨기기
+    document.getElementById('wordAnswer').value = ''; // 입력 필드 초기화
+    displayNextMeaning();
+}
+
+// 다음 뜻을 화면에 표시하는 함수
+function displayNextMeaning() {
+    if (currentMeaningIndex < testMeanings.length) {
+        document.getElementById('testMeaning').textContent = testMeanings[currentMeaningIndex].meaning;
+        document.getElementById('wordFeedback').textContent = ''; // 피드백 초기화
+    } else {
+        document.getElementById('wordFeedback').textContent = '모든 뜻에 해당하는 단어를 맞췄습니다!';
+        document.getElementById('wordTestSection').style.display = 'none'; // 테스트 종료
+        document.getElementById('wordList').style.display = 'block'; // 단어 목록 다시 보이기
+    }
+}
+
+// 사용자가 입력한 단어를 확인하는 함수
+function checkWordAnswer() {
+    const userAnswer = document.getElementById('wordAnswer').value.trim();
+    const correctWord = testMeanings[currentMeaningIndex].word;
+
+    if (userAnswer === correctWord) {
+        currentMeaningIndex++;
+        displayNextMeaning();
+        document.getElementById('wordAnswer').value = ''; // 입력 필드 초기화
+    } else {
+        document.getElementById('wordFeedback').textContent = '틀렸습니다. 다시 시도하세요.';
+    }
+}
+
+function seeWordAnswer() {
+    const  wordAnswer = document.getElementById('wordAnswer');
+    wordAnswer.value = testMeanings[currentMeaningIndex].word;
+}
+
+function endTest() {
+    document.getElementById('wordTestSection').style.display = 'none';
+    document.getElementById('testSection').style.display = 'none';
+    document.getElementById('wordList').style.display = 'block';
 }
 
 // 페이지가 로드되면 단어 목록을 표시

@@ -65,6 +65,9 @@ li {
   flex: 1; /* 각 버튼이 같은 크기를 가짐 */
   margin: 5px;
 }
+
 .test-section {
   display: none; /* 테스트 중이 아닐 때는 숨김 */
 }
+
+

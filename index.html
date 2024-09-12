@@ -16,7 +16,8 @@
         <button onclick="addWord()">저장</button>
         <button onclick="deleteWord()">삭제</button>
         <button onclick="reset()">초기화</button>
-        <button onclick="startTest()">테스트</button>
+        <button onclick="startTest()"> 뜻 테스트</button>
+        <button onclick="startWordTest()">단어 테스트</button>
     </div>
     <div class="menu">
         <button onclick="commu(1)">커뮤1</button>
@@ -28,16 +29,29 @@
 
     <!-- 테스트를 위한 섹션 -->
     <div class="test-section" id="testSection">
-        <h2>단어 테스트</h2>
+        <h2>뜻 테스트</h2>
         <p id="testWord"></p>
         <input type="text" id="testAnswer" placeholder="뜻을 입력하세요" onkeyup="checkEnter(event, checkAnswer)" autocomplete="off">
         <div class="menu">
             <button onclick="checkAnswer()">정답 입력</button>
-            <button onclick="seeAnswer()">뜻 보기</button>
-        </div>
-        
+            <button onclick="seeAnswer()">정답 보기</button>
+            <button onclick="endTest()">테스트 끝내기</button>
+        </div>        
         <p id="feedback"></p>
     </div>
+
+    <div class="test-section" id="wordTestSection">
+        <h2>단어 테스트</h2>
+        <p id="testMeaning"></p>
+        <input type="text" id="wordAnswer" placeholder="단어를 입력하세요" onkeyup="checkEnter(event, checkWordAnswer)">
+        <div class="menu">
+            <button onclick="checkWordAnswer()">정답 입력</button>
+            <button onclick="seeWordAnswer()">정답 보기</button>
+            <button onclick="endTest()">테스트 끝내기</button>
+        </div>
+        <p id="wordFeedback"></p>
+    </div>
+
 </div>
 
 <script src="script.js"></script>
