@@ -1,6 +1,3 @@
-
-let testWords = [];
-let currentWordIndex = 0;
 const commuWord1 = [['metrics','계량적 분석'],['self-reported','자가 보고된'],['subconsciously','잠재의식적으로'],['upbringing','양육, 훈육'],['inconsistent','내용이 다른'],['nuances','미묘한 차이'],['restorative','원기를 회복시키는'],['deprive','빼앗다'],['malleable','영향을 잘 받는'],['molded','만들다, 주조하다'],['self-discovery','자아 발견'],['harmony','조화, 화합']];
 const commuWord2 = [['consent','동의'],['transparent','투명한, 정직한'],['disclose','공개하다, 밝히다'],['sustainability','지속 가능성'],['emit','방출하다, 내뿜다'],['deployment','배치, 사용'],['mitigate','완화하다, 경감하다'],['initiative','계획, 주도'],['infringement','침해, 위반'],['bias','편견, 편향'],['representation','표현, 묘사'],['legislation','법률, 입법']];
 const commuWord3 =[['egocentric','자기중심적인, 이기적인'],['oblivious','의식하지 못하는'],['acknowledge','인정하다'],['compound','악화시키다'],['circumstance','환경, 상황, 정황, 형편'],['disparity','차이, 격차, 불균형, 부조화'],['dedicated','전념하는, 헌신적인'],['conspire','음모를 꾸미다'],['skewed','왜곡된'],['downplaying','경시하다'],['chalk','~탓으로 돌리다'],['paradoxical','역설적인']]
@@ -170,6 +167,10 @@ function displayWords() {
     });
 }
 
+
+let testWords = [];
+let currentWordIndex = 0;
+let correctAnswers = 0;
 // 단어 테스트를 시작하는 함수
 function startTest() {
     const words = loadWords();
@@ -185,6 +186,7 @@ function startTest() {
     document.getElementById('testSection').style.display = 'block'; // 테스트 섹션 표시
     document.getElementById('wordList').style.display = 'none'; // 단어 목록 숨기기
     document.getElementById('testAnswer').value = ''; // 이전 답 초기화
+    document.getElementById('progress').textContent = `진행률: ${currentWordIndex+1}/${testWords.length}`;
     displayNextWord();
 }
 
@@ -206,12 +208,14 @@ function checkAnswer() {
     const correctAnswer = testWords[currentWordIndex].meaning.split(', ');
 
     if (userAnswer.every(element => correctAnswer.includes(element))) {
+        correctAnswers++;
         currentWordIndex++;
         displayNextWord();
         document.getElementById('testAnswer').value = ''; // 입력 필드 초기화
     } else {
         document.getElementById('feedback').textContent = '틀렸습니다. 다시 시도하세요.';
     }
+    document.getElementById('progress').textContent = `진행률: ${currentWordIndex+1}/${testWords.length}`;
 }
 
 function seeAnswer() {
@@ -228,10 +232,11 @@ function checkEnter(event, func) {
 
 let testMeanings = []; // 뜻 기반 테스트를 위한 배열
 let currentMeaningIndex = 0;
+let correctMeaningAnswers = 0;
 
 // 단어 -> 뜻 테스트 시작
 function startWordTest() {
-    const words = loadWords();
+    const words = loadWords()
     if (words.length === 0) {
         alert('저장된 단어가 없습니다.');
         return;
@@ -245,6 +250,7 @@ function startWordTest() {
     document.getElementById('testSection').style.display = 'none'; // 뜻 -> 단어 테스트 섹션 숨기기
     document.getElementById('wordList').style.display = 'none'; // 단어 목록 숨기기
     document.getElementById('wordAnswer').value = ''; // 입력 필드 초기화
+    document.getElementById('wordProgress').textContent = `진행률: ${currentMeaningIndex+1}/${testMeanings.length}`;
     displayNextMeaning();
 }
 
@@ -266,18 +272,23 @@ function checkWordAnswer() {
     const correctWord = testMeanings[currentMeaningIndex].word;
 
     if (userAnswer === correctWord) {
+        correctMeaningAnswers++;
         currentMeaningIndex++;
         displayNextMeaning();
         document.getElementById('wordAnswer').value = ''; // 입력 필드 초기화
     } else {
         document.getElementById('wordFeedback').textContent = '틀렸습니다. 다시 시도하세요.';
     }
+    document.getElementById('wordProgress').textContent = `진행률: ${currentMeaningIndex+1}/${testMeanings.length}`;
 }
 
 function seeWordAnswer() {
     const  wordAnswer = document.getElementById('wordAnswer');
     wordAnswer.value = testMeanings[currentMeaningIndex].word;
 }
+
+
+
 
 function endTest() {
     document.getElementById('wordTestSection').style.display = 'none';
@@ -289,5 +300,6 @@ function endTest() {
 window.onload = function() {
     displayWords();
 }
+
 
 
